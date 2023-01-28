@@ -1,0 +1,10 @@
+name: phidot
+channels:
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+    - fastapi==0.89.1
+    - black
+prefix: /opt/miniconda3/envs/phidot
