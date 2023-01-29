@@ -1,10 +1,11 @@
 name: phidot
 channels:
   - defaults
+  - conda-forge
 dependencies:
-  - python=3.11
+  - python=3.10.9
   - pip
   - pip:
-    - fastapi==0.89.1
-    - black
+    - -r requirements.txt
+    - -e ./space-stream
 prefix: /opt/miniconda3/envs/phidot

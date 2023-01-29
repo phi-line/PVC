@@ -1,0 +1,10 @@
+# general imports
+pyopengl
+numpy
+
+# macos
+syphonpy; platform_system == "Darwin"
+glfw; platform_system == "Darwin"
+
+# windows
+SpoutGL>=0.0.4; platform_system == "Windows"
