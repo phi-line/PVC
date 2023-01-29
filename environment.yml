@@ -7,5 +7,6 @@ dependencies:
   - pip
   - pip:
     - -r requirements.txt
+    - -r requirements-dev.txt
     - -e ./space-stream
 prefix: /opt/miniconda3/envs/phidot

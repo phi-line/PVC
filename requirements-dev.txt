@@ -1,0 +1,7 @@
+# formatting, linting, and type checking
+black
+
+# tests
+pytest
+pytest-xdist
+pytest-asyncio

@@ -1,10 +1,10 @@
-# general imports
+# pvc general imports
 pyopengl
 numpy
 
-# macos
+# pvc for windows
+SpoutGL>=0.0.4; platform_system == "Windows"
+
+# pvc for macos
 syphonpy; platform_system == "Darwin"
 glfw; platform_system == "Darwin"
-
-# windows
-SpoutGL>=0.0.4; platform_system == "Windows"
