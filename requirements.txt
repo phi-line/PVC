@@ -1,3 +1,6 @@
+# api
+fastapi
+
 # pvc general imports
 pyopengl
 numpy
