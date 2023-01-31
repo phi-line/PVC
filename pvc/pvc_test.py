@@ -1,4 +1,8 @@
+import sys
 import asyncio
+
+import numpy as np
+import pytest
 
 from pvc import pvc
 
@@ -12,13 +16,13 @@ def test_pvc():
     right = pvc.PVCServer.create(sender_name="B", receiver_name="A")
 
     # first send a cyan frame from left to right, through A
-    left.send(CYAN, dtype=np.uint8)
+    left.send(CYAN)
 
     frame = right.receive()
     assert frame == CYAN
 
     # then send a magenta frame from right to left, through B
-    right.send(MAGENTA, dtype=np.uint8)
+    right.send(MAGENTA)
 
     frame = left.receive()
     assert frame == MAGENTA

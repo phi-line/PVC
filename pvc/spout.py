@@ -1,27 +1,28 @@
 import logging
 from typing import Optional
 
-from pvc import pvc_server
+from pvc import pvc
 
 import SpoutGL
 import numpy as np
 from OpenGL import GL
 
 
-class SpoutServer(pvc_server.PVCServer):
+class SpoutServer(pvc.PVCServer):
     def __init__(
         self, sender_name: str = "SpoutSender", receiver_name: str = "SpoutReciever"
     ):
         super().__init__(sender_name, receiver_name)
         self.sender: Optional[SpoutGL.SpoutSender] = None
         self.reciever: Optional[SpoutGL.SpoutReciever] = None
+        self.setup()
 
     def setup(self) -> None:
         # setup spout senders and receivers
         self.sender = SpoutGL.SpoutSender()
         self.sender.setSenderName(self.sender_name)
-        self.reciever = SpoutGL.SpoutReciever()
-        self.reciever.set(self.sender_name)
+        self.reciever = SpoutGL.SpoutReceiver()
+        self.reciever.setReceiverName(self.sender_name)
 
     def send(self, frame: np.array) -> None:
         h, w = frame.shape[:2]
@@ -40,7 +41,7 @@ class SpoutServer(pvc_server.PVCServer):
         self.sender.setFrameSync(self.sender_name)
 
     def receive(self) -> Optional[np.array]:
-        w, h = self.reciever.getSenderSize()
+        w, h = self.reciever.getSenderWidth(), self.reciever.getSenderHeight()
         frame = np.zeros((h, w, 4), dtype=np.uint8)
         success = self.reciever.receiveImage(frame, w, h, GL.GL_RGBA, False, 0)
 

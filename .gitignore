@@ -6,3 +6,5 @@ vortex
 
 # wheeeeeeel
 *.whl
+
+__pycache__
