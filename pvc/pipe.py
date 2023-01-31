@@ -5,7 +5,7 @@ from typing import Optional
 import numpy as np
 
 
-class PVCServer(abc.ABC):
+class PVCPipe(abc.ABC):
     def __init__(self, sender_name: str, receiver_name: str):
         super().__init__()
         self.sender_name = sender_name
@@ -31,8 +31,8 @@ class PVCServer(abc.ABC):
     def create(sender_name: str, receiver_name: str):
         match platform.system():
             case "Windows":
-                from pvc import spout
-                return spout.SpoutServer(sender_name, receiver_name)
+                import spout
+                return spout.SpoutPipe(sender_name, receiver_name)
             case "Darwin":
                 # Syphon not implemented yet
                 raise Exception("OSX is not supported yet!")

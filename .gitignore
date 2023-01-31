@@ -8,3 +8,4 @@ vortex
 *.whl
 
 __pycache__
+.pytest_cache

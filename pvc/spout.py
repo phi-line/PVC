@@ -1,28 +1,28 @@
 import logging
 from typing import Optional
+import array
 
-from pvc import pvc
+import pipe
 
 import SpoutGL
 import numpy as np
 from OpenGL import GL
 
-
-class SpoutServer(pvc.PVCServer):
+class SpoutPipe(pipe.PVCPipe):
     def __init__(
-        self, sender_name: str = "SpoutSender", receiver_name: str = "SpoutReciever"
+        self, sender_name: str = "SpoutSender", receiver_name: str = "SpoutReceiver"
     ):
         super().__init__(sender_name, receiver_name)
         self.sender: Optional[SpoutGL.SpoutSender] = None
-        self.reciever: Optional[SpoutGL.SpoutReciever] = None
+        self.receiver: Optional[SpoutGL.SpoutReceiver] = None
         self.setup()
 
     def setup(self) -> None:
         # setup spout senders and receivers
         self.sender = SpoutGL.SpoutSender()
         self.sender.setSenderName(self.sender_name)
-        self.reciever = SpoutGL.SpoutReceiver()
-        self.reciever.setReceiverName(self.sender_name)
+        self.receiver = SpoutGL.SpoutReceiver()
+        self.receiver.setReceiverName(self.receiver_name)
 
     def send(self, frame: np.array) -> None:
         h, w = frame.shape[:2]
@@ -41,16 +41,23 @@ class SpoutServer(pvc.PVCServer):
         self.sender.setFrameSync(self.sender_name)
 
     def receive(self) -> Optional[np.array]:
-        w, h = self.reciever.getSenderWidth(), self.reciever.getSenderHeight()
-        frame = np.zeros((h, w, 4), dtype=np.uint8)
-        success = self.reciever.receiveImage(frame, w, h, GL.GL_RGBA, False, 0)
+        buffer = None
 
-        if not success:
-            logging.error("Could not receive spout image.")
-            return
+        while True:
+            result = self.receiver.receiveImage(buffer, GL.GL_RGBA, False, 0)
 
-        return frame
+            if self.receiver.isUpdated():
+                width = self.receiver.getSenderWidth()
+                height = self.receiver.getSenderHeight()
+                buffer = np.array([[np.repeat(0, width * height * 4)]], dtype=np.uint8)
+
+            if result and buffer.any():
+                return buffer
+
+            # Wait until the next frame is ready
+            # Wait time is in milliseconds; note that 0 will return immediately
+            self.receiver.waitFrameSync(self.receiver_name, 1)
 
     def teardown(self) -> None:
         self.sender.releaseSender()
-        self.reciever.releaseReceiver()
+        self.receiver.releaseReceiver()
