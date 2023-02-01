@@ -31,7 +31,7 @@ class PVCPipe(abc.ABC):
     def create(sender_name: str, receiver_name: str):
         match platform.system():
             case "Windows":
-                import spout
+                from . import spout
                 return spout.SpoutPipe(sender_name, receiver_name)
             case "Darwin":
                 # Syphon not implemented yet

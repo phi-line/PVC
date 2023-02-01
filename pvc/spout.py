@@ -1,8 +1,7 @@
 import logging
 from typing import Optional
-import array
 
-import pipe
+from . import pipe
 
 import SpoutGL
 import numpy as np

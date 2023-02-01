@@ -3,5 +3,3 @@ black
 
 # tests
 pytest
-pytest-xdist
-pytest-asyncio
