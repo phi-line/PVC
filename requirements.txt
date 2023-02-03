@@ -1,5 +1,6 @@
 # api
 fastapi
+uvicorn[standard]
 
 # pvc general imports
 pyopengl
