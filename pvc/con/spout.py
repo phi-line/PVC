@@ -1,13 +1,16 @@
 import logging
 from typing import Optional
 
-from . import pipe
+from pvc.con import pipe
 
 import SpoutGL
 import numpy as np
 from OpenGL import GL
 
+
 class SpoutPipe(pipe.PVCPipe):
+    """SpoutPipe is the Spout implementation of the PVCPipe generic interface."""
+
     def __init__(
         self, sender_name: str = "SpoutSender", receiver_name: str = "SpoutReceiver"
     ):

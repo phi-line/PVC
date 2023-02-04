@@ -6,6 +6,12 @@ import numpy as np
 
 
 class PVCPipe(abc.ABC):
+    """A generic interface for bi-directional communication over syphon/spout.
+
+    Depending on the detected system platform, PVCPipe will create the appropriate
+    sender and receiver, and exposes genereric functions for reading and writing.
+    """
+
     def __init__(self, sender_name: str, receiver_name: str):
         super().__init__()
         self.sender_name = sender_name
@@ -31,10 +37,11 @@ class PVCPipe(abc.ABC):
     def create(sender_name: str, receiver_name: str):
         match platform.system():
             case "Windows":
-                from . import spout
+                from pvc.con import spout
+
                 return spout.SpoutPipe(sender_name, receiver_name)
             case "Darwin":
                 # Syphon not implemented yet
                 raise Exception("OSX is not supported yet!")
             case _:
-                raise Exception(f"Platform {platform} is not supported!")
+                raise Exception(f'Platform "{platform}" is not supported!')
