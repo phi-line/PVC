@@ -1,7 +1,7 @@
 import abc
 from typing import Optional
 
-from pvc.con import pipe
+from pvc.pipe import pipe
 
 import numpy as np
 

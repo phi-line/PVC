@@ -1,7 +1,7 @@
 import logging
 from typing import Optional
 
-from pvc.con import pipe
+from pvc.pipe import pipe
 
 import SpoutGL
 import numpy as np
