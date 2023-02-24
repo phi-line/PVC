@@ -1,4 +1,4 @@
-name: phidot
+name: pvc
 channels:
   - defaults
   - conda-forge
@@ -8,4 +8,4 @@ dependencies:
   - pip:
     - -r requirements.txt
     - -r requirements-dev.txt
-prefix: /opt/miniconda3/envs/phidot
+prefix: /opt/miniconda3/envs/pvc

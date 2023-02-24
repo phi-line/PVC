@@ -1,34 +1,19 @@
 import abc
-from typing import Optional
 
 from pvc.pipe import pipe
-
-import numpy as np
-
-
-OPERATORS = {
-    # default operator that simply returns a NoOP
-    "_": lambda: NoOP
-}
-
 
 class OP(abc.ABC):
     """A generic interface for performing an operation via callback."""
 
     def __init__(self, config: dict):
         super().__init__()
-        # Add operator config validation
         self.config = config
-
-    def process(self, left: pipe.PVCPipe, right: pipe.PVCPipe) -> None:
+    
+    def validate(self) -> bool:
         ...
 
-    @staticmethod
-    def create(op_name: str):
-        # Check to see if the operator exists in the list of possible operators.
-        assert op_name in OPERATORS, f'Operator "{style}" is not supported!'
-
-        return OPERATORS[op_name]
+    def process(self, i: pipe.PVCPipe, o: pipe.PVCPipe) -> None:
+        ...
 
 
 class NoOP(OP):
@@ -37,5 +22,31 @@ class NoOP(OP):
     def __init__(self, config: dict):
         super().__init__(config)
 
-    def process_input(self, data: dict):
-        pass
+    def validate(self) -> bool:
+        """Always validate; config is not used."""
+        return True
+
+    def process(self, i: pipe.PVCPipe, o: pipe.PVCPipe) -> None:
+        """Receive the frame and then send it back."""
+        frame = i.receive()
+        o.send(frame)
+
+
+class ControlNet(OP):
+    """Implementation of the ControlNet operator."""
+    
+    def __init__(self, config: dict):
+        super().__init__(config)
+
+    def validate(self) -> bool:
+        """Validate that the input is acceptable by ControlNet"""
+        # TODO(kiem) Validate the ControlNet config
+        return True
+
+    def process(self, i: pipe.PVCPipe, o: pipe.PVCPipe) -> None:
+        """Receive the frame and then send it back."""
+        frame = i.receive()
+
+        # TODO(kiem) Process the input + config with the ControlNet
+
+        o.send(frame)
