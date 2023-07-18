@@ -75,7 +75,3 @@ uvicorn api:pvc --reload
     "msg": "reason"
 }
 ```
-
-## Pipe
-
-Pipe defines the
