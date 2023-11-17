@@ -3,7 +3,7 @@ import sys
 import numpy as np
 import pytest
 
-from . import pipe
+import pipe
 
 CYAN = np.array([[[0, 255, 255, 255]]], dtype=np.uint8)
 MAGENTA = np.array([[[255, 0, 255, 255]]], dtype=np.uint8)
