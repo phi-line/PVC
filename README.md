@@ -35,7 +35,7 @@ conda env update --prefix ./.venv --file environment.yml  --prune
 ## API
 
 ```
-uvicorn api:pvc --reload
+uvicorn pvc.api:pvc --reload
 ```
 
 ### Spout/Syphon API design

@@ -1,6 +1,6 @@
 from fastapi import FastAPI, WebSocket
 
-from pvc.op import validator, OPERATORS
+from pvc.op import validator
 
 pvc = FastAPI()
 
@@ -29,4 +29,4 @@ async def pipe(ws: WebSocket):
         except AssertionError as e:
             await ws.send_json({"status": "error", "msg": str(e)})
     
-        op = OPERATORS[name](config)
+        op = validator.OPERATORS[name](config)
