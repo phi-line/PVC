@@ -37,7 +37,7 @@ class PVCPipe(abc.ABC):
     def create(sender_name: str, receiver_name: str):
         match platform.system():
             case "Windows":
-                from pipe import spout
+                import spout
 
                 return spout.SpoutPipe(sender_name, receiver_name)
             case "Darwin":
