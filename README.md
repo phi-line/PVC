@@ -32,6 +32,12 @@ conda activate ./.venv
 conda env update --prefix ./.venv --file environment.yml  --prune
 ```
 
+## Testing
+
+```
+python pvc/pipe/pipe_test.py
+```
+
 ## API
 
 ```
